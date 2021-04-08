@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intouch.ssm.dao.UserMapper">
+
+  <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+  <resultMap id="BaseResultMap" type="com.intouch.ssm.domain.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_integral" jdbcType="INTEGER" property="userIntegral" />
+    <result column="is_email_verify" jdbcType="CHAR" property="isEmailVerify" />
+    <result column="email_verify_code" jdbcType="VARCHAR" property="emailVerifyCode" />
+    <result column="last_login_time" jdbcType="BIGINT" property="lastLoginTime" />
+    <result column="last_longin_ip" jdbcType="VARCHAR" property="lastLonginIp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, email, nickname, password, user_integral, is_email_verify, email_verify_code, 
+    last_login_time, last_longin_ip
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from d_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <!--登录sql映射防范-->
+  <select id="selectByEmailFaield" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from d_user
+    where email = #{email}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from d_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.intouch.ssm.domain.User">
+    insert into d_user (id, email, nickname, 
+      password, user_integral, is_email_verify, 
+      email_verify_code, last_login_time, last_longin_ip
+      )
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{userIntegral,jdbcType=INTEGER}, #{isEmailVerify,jdbcType=CHAR}, 
+      #{emailVerifyCode,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=BIGINT}, #{lastLonginIp,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.intouch.ssm.domain.User">
+    insert into d_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="userIntegral != null">
+        user_integral,
+      </if>
+      <if test="isEmailVerify != null">
+        is_email_verify,
+      </if>
+      <if test="emailVerifyCode != null">
+        email_verify_code,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lastLonginIp != null">
+        last_longin_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntegral != null">
+        #{userIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="isEmailVerify != null">
+        #{isEmailVerify,jdbcType=CHAR},
+      </if>
+      <if test="emailVerifyCode != null">
+        #{emailVerifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastLonginIp != null">
+        #{lastLonginIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.intouch.ssm.domain.User">
+    update d_user
+    <set>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntegral != null">
+        user_integral = #{userIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="isEmailVerify != null">
+        is_email_verify = #{isEmailVerify,jdbcType=CHAR},
+      </if>
+      <if test="emailVerifyCode != null">
+        email_verify_code = #{emailVerifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastLonginIp != null">
+        last_longin_ip = #{lastLonginIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.intouch.ssm.domain.User">
+    update d_user
+    set email = #{email,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_integral = #{userIntegral,jdbcType=INTEGER},
+      is_email_verify = #{isEmailVerify,jdbcType=CHAR},
+      email_verify_code = #{emailVerifyCode,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=BIGINT},
+      last_longin_ip = #{lastLonginIp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
