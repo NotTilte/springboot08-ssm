@@ -29,7 +29,7 @@ public class ServiceTrace {
     public Object traceLog(ProceedingJoinPoint pjpint) throws Throwable{
         //获得目标对象执行方法说明信息
         String methodInfo=getTargetMethodInfo(pjpint);
-        //记录业务方法执行的起始时间点
+        //记录业务方法执行的起始时间点1111111111
         long start=System.currentTimeMillis();
         System.out.println("AOP环绕通知："+dateFormat.format(new Date(start))+"...方法开始执行..."+methodInfo);
 
